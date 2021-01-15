@@ -1,7 +1,8 @@
 import React from "react";
+import SmoothieList from "./smoothieList";
 
 const Home = () => {
-  return <>home</>;
+  return <SmoothieList />;
 };
 
 export default Home;
