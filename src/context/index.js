@@ -12,49 +12,49 @@ class MyProvider extends Component {
         ingredients: ["1 cup milk", "1 cup cilantro"],
       },
       {
-        name: "green monster",
+        name: "red monster",
         id: "as",
         description: "yummy",
         ingredients: ["1 cup milk", "1 cup cilantro"],
       },
       {
-        name: "green monster",
+        name: "blue monster",
         id: "ds",
         description: "yummy",
         ingredients: ["1 cup milk", "1 cup cilantro"],
       },
       {
-        name: "green monster",
+        name: "aaa monster",
         id: "wq",
         description: "yummy",
         ingredients: ["1 cup milk", "1 cup cilantro"],
       },
       {
-        name: "green monster",
+        name: "sss monster",
         id: "ew",
         description: "yummy",
         ingredients: ["1 cup milk", "1 cup cilantro"],
       },
       {
-        name: "green monster",
+        name: "ccc monster",
         id: "re",
         description: "yummy",
         ingredients: ["1 cup milk", "1 cup cilantro"],
       },
       {
-        name: "green monster",
+        name: "bbb monster",
         id: "q",
         description: "yummy",
         ingredients: ["1 cup milk", "1 cup cilantro"],
       },
       {
-        name: "green monster",
+        name: "ee monster",
         id: "s",
         description: "yummy",
         ingredients: ["1 cup milk", "1 cup cilantro"],
       },
       {
-        name: "green monster",
+        name: "ww monster",
         id: "b",
         description: "yummy",
         ingredients: ["1 cup milk", "1 cup cilantro"],
@@ -62,9 +62,22 @@ class MyProvider extends Component {
     ],
   };
 
+  deleteSmoothieHandler = (id) => {
+    const filtered = this.state.smoothies.filter((obj) => {
+      return obj.id !== id;
+    });
+    // console.log(filtered);
+    this.setState({ smoothies: filtered });
+  };
+
   render() {
     return (
-      <MyContext.Provider value={this.state}>
+      <MyContext.Provider
+        value={{
+          state: this.state,
+          deleteSmoothie: this.deleteSmoothieHandler,
+        }}
+      >
         {this.props.children}
       </MyContext.Provider>
     );

@@ -6,7 +6,7 @@ import Paginations from "./Paginations";
 
 const SmoothieList = () => {
   const context = useContext(MyContext);
-  const { smoothies } = context;
+  const { smoothies } = context.state;
   const [currPage, setCurrPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [results, setResults] = useState([]);
@@ -16,7 +16,7 @@ const SmoothieList = () => {
   };
 
   const calculateTotalPages = (totalItems, itemsPerPage) => {
-    const pages = Math.floor(totalItems / itemsPerPage) + 1;
+    const pages = Math.ceil(totalItems / itemsPerPage);
     setTotalPages(pages);
   };
 
@@ -30,24 +30,28 @@ const SmoothieList = () => {
     setResults(res);
   };
 
-  useEffect(() => {
-    console.log("USE EFFECT 1");
-    setCurrPage(1);
-    calculateTotalPages(smoothies.length, 6);
-    getResults();
-  }, []);
+  // useEffect(() => {
+  //   console.log("USE EFFECT 1");
+  //   setCurrPage(1);
+  //   calculateTotalPages(smoothies.length, 6);
+  //   getResults();
+  // }, []);
 
   useEffect(() => {
     console.log("USE EFFECT 2");
-    calculateTotalPages(smoothies.length, 6);
     getResults();
+    calculateTotalPages(smoothies.length, 6);
   }, [currPage]);
 
   useEffect(() => {
     console.log("USE EFFECT 3");
-    calculateTotalPages(smoothies.length, 6);
     getResults();
-  }, [smoothies]);
+    calculateTotalPages(smoothies.length, 6);
+  }, [smoothies.length]);
+
+  const selectRandomNum = () => {
+    return Math.floor(Math.random() * 3);
+  };
 
   return (
     <>
@@ -62,12 +66,13 @@ const SmoothieList = () => {
                     id={smoothie.id}
                     image={Math.floor(i % 3)}
                     description={smoothie.description}
+                    randomNum={selectRandomNum()}
                   />
                 </Col>
               );
             })
           ) : (
-            <h3>Sorry, no smoothie recipes are available</h3>
+            <h3>Sorry, no smoothie recipes are available on this page!</h3>
           )}
         </Row>
         <Row className="justify-content-center">
