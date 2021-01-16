@@ -3,64 +3,73 @@ import React, { Component } from "react";
 const MyContext = React.createContext();
 
 class MyProvider extends Component {
-  state = {
-    smoothies: [
-      {
-        name: "green monster",
-        id: "gm",
-        description: "yummy",
-        ingredients: ["1 cup milk", "1 cup cilantro"],
-      },
-      {
-        name: "red monster",
-        id: "as",
-        description: "yummy",
-        ingredients: ["1 cup milk", "1 cup cilantro"],
-      },
-      {
-        name: "blue monster",
-        id: "ds",
-        description: "yummy",
-        ingredients: ["1 cup milk", "1 cup cilantro"],
-      },
-      {
-        name: "aaa monster",
-        id: "wq",
-        description: "yummy",
-        ingredients: ["1 cup milk", "1 cup cilantro"],
-      },
-      {
-        name: "sss monster",
-        id: "ew",
-        description: "yummy",
-        ingredients: ["1 cup milk", "1 cup cilantro"],
-      },
-      {
-        name: "ccc monster",
-        id: "re",
-        description: "yummy",
-        ingredients: ["1 cup milk", "1 cup cilantro"],
-      },
-      {
-        name: "bbb monster",
-        id: "q",
-        description: "yummy",
-        ingredients: ["1 cup milk", "1 cup cilantro"],
-      },
-      {
-        name: "ee monster",
-        id: "s",
-        description: "yummy",
-        ingredients: ["1 cup milk", "1 cup cilantro"],
-      },
-      {
-        name: "ww monster",
-        id: "b",
-        description: "yummy",
-        ingredients: ["1 cup milk", "1 cup cilantro"],
-      },
-    ],
-  };
+  state = JSON.parse(localStorage.getItem("smoothie")) || { smoothies: [] };
+
+  componentDidUpdate() {
+    let currObj = this.state;
+    console.log("AAA");
+    console.log(JSON.stringify(currObj));
+    localStorage.setItem("smoothie", JSON.stringify(currObj));
+  }
+
+  // {
+  // smoothies: [
+  //   {
+  //     name: "green monster",
+  //     id: "gm",
+  //     description: "yummy",
+  //     ingredients: ["1 cup milk", "1 cup cilantro"],
+  //   },
+  //   {
+  //     name: "red monster",
+  //     id: "as",
+  //     description: "yummy",
+  //     ingredients: ["1 cup milk", "1 cup cilantro"],
+  //   },
+  //   {
+  //     name: "blue monster",
+  //     id: "ds",
+  //     description: "yummy",
+  //     ingredients: ["1 cup milk", "1 cup cilantro"],
+  //   },
+  //   {
+  //     name: "aaa monster",
+  //     id: "wq",
+  //     description: "yummy",
+  //     ingredients: ["1 cup milk", "1 cup cilantro"],
+  //   },
+  //   {
+  //     name: "sss monster",
+  //     id: "ew",
+  //     description: "yummy",
+  //     ingredients: ["1 cup milk", "1 cup cilantro"],
+  //   },
+  //   {
+  //     name: "ccc monster",
+  //     id: "re",
+  //     description: "yummy",
+  //     ingredients: ["1 cup milk", "1 cup cilantro"],
+  //   },
+  //   {
+  //     name: "bbb monster",
+  //     id: "q",
+  //     description: "yummy",
+  //     ingredients: ["1 cup milk", "1 cup cilantro"],
+  //   },
+  //   {
+  //     name: "ee monster",
+  //     id: "s",
+  //     description: "yummy",
+  //     ingredients: ["1 cup milk", "1 cup cilantro"],
+  //   },
+  //   {
+  //     name: "ww monster",
+  //     id: "b",
+  //     description: "yummy",
+  //     ingredients: ["1 cup milk", "1 cup cilantro"],
+  //   },
+  // ],
+  // };
 
   deleteSmoothieHandler = (id) => {
     const filtered = this.state.smoothies.filter((obj) => {

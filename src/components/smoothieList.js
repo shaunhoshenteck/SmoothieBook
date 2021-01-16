@@ -26,27 +26,20 @@ const SmoothieList = () => {
   };
 
   const getResults = () => {
-    const res = paginate(smoothies, 9, currPage);
+    const res = paginate(smoothies, 6, currPage);
     setResults(res);
   };
-
-  // useEffect(() => {
-  //   console.log("USE EFFECT 1");
-  //   setCurrPage(1);
-  //   calculateTotalPages(smoothies.length, 6);
-  //   getResults();
-  // }, []);
 
   useEffect(() => {
     console.log("USE EFFECT 2");
     getResults();
-    calculateTotalPages(smoothies.length, 9);
+    calculateTotalPages(smoothies.length, 6);
   }, [currPage]);
 
   useEffect(() => {
     console.log("USE EFFECT 3");
     getResults();
-    calculateTotalPages(smoothies.length, 9);
+    calculateTotalPages(smoothies.length, 6);
   }, [smoothies.length]);
 
   const selectRandomNum = () => {
