@@ -70,12 +70,19 @@ class MyProvider extends Component {
     this.setState({ smoothies: filtered });
   };
 
+  addSmoothieHandler = (smoothie) => {
+    const newArr = this.state.smoothies;
+    newArr.push(smoothie);
+    this.setState({ smoothies: newArr });
+  };
+
   render() {
     return (
       <MyContext.Provider
         value={{
           state: this.state,
           deleteSmoothie: this.deleteSmoothieHandler,
+          addSmoothie: this.addSmoothieHandler,
         }}
       >
         {this.props.children}
