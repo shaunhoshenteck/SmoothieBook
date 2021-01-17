@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { MyContext } from "../context/";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import SmoothieCard from "./smoothieCard";
@@ -12,6 +12,7 @@ const SmoothieList = () => {
   const [results, setResults] = useState([]);
   const [searchWord, setSearchWord] = useState("");
   const [filterOn, setFilterOn] = useState(false);
+  const searchRef = useRef();
 
   const setPage = (pageNum) => {
     setCurrPage(pageNum);
@@ -36,7 +37,7 @@ const SmoothieList = () => {
     if (!word) return;
     console.log(word);
     const filteredArr = smoothies.filter((smoothie) => {
-      return smoothie.name.includes(word);
+      return smoothie.name.toLowerCase().includes(word);
     });
 
     calculateTotalPages(filteredArr.length, 6);
@@ -44,6 +45,7 @@ const SmoothieList = () => {
     const res = paginate(filteredArr, 6, currPage);
     setResults(res);
     setFilterOn(true);
+    searchRef.current.value = "";
   };
 
   const resetFilter = () => {
@@ -51,21 +53,19 @@ const SmoothieList = () => {
     setCurrPage(1);
     getResults();
     calculateTotalPages(smoothies.length, 6);
+    searchRef.current.value = "";
   };
 
   const handleKeypress = (e) => {
     //it triggers by pressing the enter key
     if (e.key === "Enter") {
       filterResults(searchWord);
+      searchRef.current.value = "";
     }
   };
 
   const onchangeHandler = (e) => {
     setSearchWord(e.target.value);
-  };
-
-  const selectRandomNum = () => {
-    return Math.floor(Math.random() * 3);
   };
 
   useEffect(() => {
@@ -84,10 +84,11 @@ const SmoothieList = () => {
     <>
       <Container>
         <Row className="flex flex-column justify-content-center align-items-center mt-3 mb-3">
-          <h1>Your Smoothies</h1>
-          <Form inline onSubmit={(e) => e.preventDefault()}>
+          <h1 className="pacifico">Your Smoothies</h1>
+          <Form className="mt-3" inline onSubmit={(e) => e.preventDefault()}>
             <Form.Control
               onChange={onchangeHandler}
+              ref={searchRef}
               type="text"
               placeholder="Search"
               className="mr-sm-2"
@@ -119,15 +120,16 @@ const SmoothieList = () => {
                   <SmoothieCard
                     name={smoothie.name}
                     id={smoothie.id}
-                    image={Math.floor(i % 3)}
-                    description={smoothie.description}
-                    randomNum={selectRandomNum()}
+                    imageNum={smoothie.imageNum}
+                    cardDescription={smoothie.cardDescription}
                   />
                 </Col>
               );
             })
           ) : (
-            <h3>Sorry, no smoothie recipes are available on this page!</h3>
+            <h3 className="text-center">
+              Sorry, no smoothie recipes are available on this page!
+            </h3>
           )}
         </Row>
         <Row className="justify-content-center">

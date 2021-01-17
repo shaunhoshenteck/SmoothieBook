@@ -12,22 +12,27 @@ import {
 } from "react-bootstrap";
 import { MyContext } from "../context/";
 import { useHistory } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const SmoothieDetails = () => {
   const inputRef = useRef();
   const inputRefDescription = useRef();
+  const inputRefSentence = useRef();
   const params = useHistory();
   const context = useContext(MyContext);
   const [currSmoothie, setCurrSmoothie] = useState({
     name: "",
     id: "",
     description: "",
+    cardDescription: "",
     ingredients: "",
     ingredientsArr: [],
   });
 
   const [currIngredient, setcurrIngredient] = useState("");
   const [currDescription, setCurrDescription] = useState("");
+  const [currSmoothieSentence, setCurrSmoothieSentence] = useState("");
 
   const getCurrSmoothie = () => {
     const id = new URLSearchParams(params.location.search).get("id");
@@ -41,6 +46,10 @@ const SmoothieDetails = () => {
 
   const onChangeHandlerDescription = (e) => {
     setCurrDescription(e.target.value);
+  };
+
+  const onChangeHandlerSentenceDescription = (e) => {
+    setCurrSmoothieSentence(e.target.value);
   };
 
   const onChangeHandlerIngredients = (e) => {
@@ -59,6 +68,12 @@ const SmoothieDetails = () => {
     inputRefDescription.current.value = "";
   };
 
+  const editSentence = (id, val) => {
+    if (!val) return;
+    context.editSentence(id, val);
+    inputRefSentence.current.value = "";
+  };
+
   useEffect(() => {
     getCurrSmoothie();
   }, [context.state.smoothies]);
@@ -75,13 +90,45 @@ const SmoothieDetails = () => {
       >
         <h1>{currSmoothie.name}</h1>
       </Jumbotron>
+      <Row className="mb-4">
+        <Col>
+          <Card className="shadow">
+            <Card.Header as="h5">Your smoothie in a sentence</Card.Header>
+            <Card.Body className="d-flex flex-column justify-content-between">
+              <div>
+                <Card.Title>Describe your smoothie in a sentence</Card.Title>
+                <Card.Text>{currSmoothie.cardDescription}</Card.Text>
+              </div>
+              <div>
+                <Form.Control
+                  className="mt-3"
+                  onChange={onChangeHandlerSentenceDescription}
+                  type="text"
+                  placeholder="Edit your smoothie sentence"
+                  ref={inputRefSentence}
+                />
+                <Button
+                  className="mt-3"
+                  variant="primary"
+                  style={{ width: "200px", height: "40px" }}
+                  onClick={() => {
+                    editSentence(currSmoothie.id, currSmoothieSentence);
+                  }}
+                >
+                  Edit
+                </Button>
+              </div>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
       <Row>
-        <Col className="col-md-8 col-sm-6">
+        <Col className="col-md-8 col-sm-6 mb-2">
           <Card className="shadow" style={{ height: "25em" }}>
             <Card.Header as="h5">Description</Card.Header>
             <Card.Body className="d-flex flex-column justify-content-between">
               <div>
-                <Card.Title>Describe Your Smoothie!</Card.Title>
+                <Card.Title>Additional details and notes</Card.Title>
                 <Card.Text>{currSmoothie.description}</Card.Text>
               </div>
               <div>
@@ -105,7 +152,7 @@ const SmoothieDetails = () => {
             </Card.Body>
           </Card>
         </Col>
-        <Col className="col-md-4 col-sm-6">
+        <Col className="pb-3 col-md-4 col-sm-6">
           <Card>
             <Card.Body>
               <Card.Title>Ingredients</Card.Title>
@@ -122,14 +169,14 @@ const SmoothieDetails = () => {
                         key={idx}
                       >
                         {item}
-                        <span
+                        <Button
                           onClick={() =>
                             context.deleteIngredient(currSmoothie.id, idx)
                           }
-                          className="badge badge-danger"
+                          className="btn btn-danger"
                         >
-                          x
-                        </span>
+                          <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                        </Button>
                       </ListGroupItem>
                     );
                   })

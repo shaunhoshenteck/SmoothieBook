@@ -1,8 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, Form } from "react-bootstrap";
 import { MyContext } from "../context/";
+import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const CreateRecipe = () => {
   const context = useContext(MyContext);
@@ -12,8 +15,10 @@ const CreateRecipe = () => {
   const formik = useFormik({
     initialValues: {
       name: "",
+      cardDescription: "",
       description: "",
       id: "",
+      imageNum: "0",
       ingredients: "",
       ingredientsArr: [],
     },
@@ -21,9 +26,10 @@ const CreateRecipe = () => {
       name: Yup.string()
         .min(1, "Must be at least 1 character")
         .required("Required"),
-      description: Yup.string()
+      cardDescription: Yup.string()
         .max(100, "Must be 100 characters or less")
         .required("Required"),
+      description: Yup.string(),
       id: Yup.string().required("Required"),
       ingredients: Yup.string(),
     }),
@@ -31,6 +37,10 @@ const CreateRecipe = () => {
       console.log(values);
       context.addSmoothie(values);
       console.log(context.state.smoothies);
+      toast.success(`Added Smoothie Successfully! Check Home!`, {
+        position: "top-left",
+        autoClose: 2500,
+      });
     },
   });
 
@@ -61,7 +71,7 @@ const CreateRecipe = () => {
   };
 
   return (
-    <Container>
+    <Container className="pb-3">
       <h1 className="text-center mt-5">Create Your Smoothie!</h1>
       <div className="col-md-12 mt-5">
         <form onSubmit={formik.handleSubmit}>
@@ -83,24 +93,42 @@ const CreateRecipe = () => {
             ) : null}
           </div>
           <div className="form-group">
-            <label htmlFor="description">Description</label>
+            <label htmlFor="cardDescription">
+              Describe your smoothie in a sentence!
+            </label>
             <input
               className="form-control"
-              id="description"
-              name="description"
+              id="cardDescription"
+              name="cardDescription"
               type="text"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.description}
+              value={formik.values.cardDescription}
             />
-            {formik.touched.description && formik.errors.description ? (
+            {formik.touched.cardDescription && formik.errors.cardDescription ? (
               <div className="mt-2 alert alert-danger">
-                {formik.errors.description}
+                {formik.errors.cardDescription}
               </div>
             ) : null}
           </div>
           <div className="form-group">
-            <label htmlFor="id">Create a unique ID for your smoothie</label>
+            <label htmlFor="imageNum">
+              Select a number for your smoothie image
+            </label>
+            <Form.Control
+              as="select"
+              name="imageNum"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.imageNum}
+            >
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </Form.Control>
+          </div>
+          <div className="form-group">
+            <label htmlFor="id">Create a unique key for your smoothie</label>
             <input
               className="form-control"
               id="id"
@@ -128,7 +156,7 @@ const CreateRecipe = () => {
           </div>
           <div className="form-group">
             <div className="row">
-              <div className="col-8">
+              <div className="col-md-8 col-sm-10 mb-2">
                 <label htmlFor="ingredients">
                   Add to the ingredients list (Input name of ingredient,
                   quantity and measurement)
@@ -148,7 +176,7 @@ const CreateRecipe = () => {
                   </div>
                 ) : null}
               </div>
-              <div className="d-flex align-items-end col-4">
+              <div className="d-flex align-items-end col-md-4">
                 <Button
                   className="w-50 btn"
                   type="button"
@@ -169,17 +197,34 @@ const CreateRecipe = () => {
                         className="list-group-item d-flex justify-content-between align-items-center list-group-item-action"
                       >
                         {item}
-                        <span
-                          className="badge badge-danger"
+                        <Button
+                          className="btn btn-danger"
                           onClick={() => removeIngredient(idx)}
                         >
-                          x
-                        </span>
+                          <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                        </Button>
                       </li>
                     );
                   })
                 : null}
             </ul>
+          </div>
+          <div className="form-group mt-3">
+            <label htmlFor="description">Smoothie information and notes</label>
+            <input
+              className="form-control"
+              id="description"
+              name="description"
+              type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.description}
+            />
+            {formik.touched.description && formik.errors.description ? (
+              <div className="mt-2 alert alert-danger">
+                {formik.errors.description}
+              </div>
+            ) : null}
           </div>
           <Button
             onClick={() => validateId()}
