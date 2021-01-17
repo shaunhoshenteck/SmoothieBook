@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Navbar, FormControl, Button, Nav } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 
@@ -19,10 +19,6 @@ const NavBar = () => {
           <Nav.Link>Create a recipe</Nav.Link>
         </LinkContainer>
       </Nav>
-      <Form inline>
-        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-        <Button variant="outline-info">Search</Button>
-      </Form>
     </Navbar>
   );
 };

@@ -3,73 +3,128 @@ import React, { Component } from "react";
 const MyContext = React.createContext();
 
 class MyProvider extends Component {
-  state = JSON.parse(localStorage.getItem("smoothie")) || { smoothies: [] };
+  // state = JSON.parse(localStorage.getItem("smoothie")) || { smoothies: [] };
 
-  componentDidUpdate() {
-    let currObj = this.state;
-    console.log("AAA");
-    console.log(JSON.stringify(currObj));
-    localStorage.setItem("smoothie", JSON.stringify(currObj));
-  }
+  // componentDidUpdate() {
+  //   let currObj = this.state;
+  //   console.log(JSON.stringify(currObj));
+  //   localStorage.setItem("smoothie", JSON.stringify(currObj));
+  // }
 
-  // {
-  // smoothies: [
-  //   {
-  //     name: "green monster",
-  //     id: "gm",
-  //     description: "yummy",
-  //     ingredients: ["1 cup milk", "1 cup cilantro"],
-  //   },
-  //   {
-  //     name: "red monster",
-  //     id: "as",
-  //     description: "yummy",
-  //     ingredients: ["1 cup milk", "1 cup cilantro"],
-  //   },
-  //   {
-  //     name: "blue monster",
-  //     id: "ds",
-  //     description: "yummy",
-  //     ingredients: ["1 cup milk", "1 cup cilantro"],
-  //   },
-  //   {
-  //     name: "aaa monster",
-  //     id: "wq",
-  //     description: "yummy",
-  //     ingredients: ["1 cup milk", "1 cup cilantro"],
-  //   },
-  //   {
-  //     name: "sss monster",
-  //     id: "ew",
-  //     description: "yummy",
-  //     ingredients: ["1 cup milk", "1 cup cilantro"],
-  //   },
-  //   {
-  //     name: "ccc monster",
-  //     id: "re",
-  //     description: "yummy",
-  //     ingredients: ["1 cup milk", "1 cup cilantro"],
-  //   },
-  //   {
-  //     name: "bbb monster",
-  //     id: "q",
-  //     description: "yummy",
-  //     ingredients: ["1 cup milk", "1 cup cilantro"],
-  //   },
-  //   {
-  //     name: "ee monster",
-  //     id: "s",
-  //     description: "yummy",
-  //     ingredients: ["1 cup milk", "1 cup cilantro"],
-  //   },
-  //   {
-  //     name: "ww monster",
-  //     id: "b",
-  //     description: "yummy",
-  //     ingredients: ["1 cup milk", "1 cup cilantro"],
-  //   },
-  // ],
-  // };
+  state = {
+    smoothies: [
+      {
+        name: "green monster",
+        id: "gm",
+        description: "yummy",
+        ingredients: "",
+        ingredientsArr: ["1 cup milk", "1 cup cilantro"],
+      },
+      {
+        name: "red monster",
+        id: "as",
+        description: "yummy",
+        ingredients: "",
+        ingredientsArr: ["1 cup milk", "1 cup cilantro"],
+      },
+      {
+        name: "blue monster",
+        id: "ds",
+        description: "yummy",
+        ingredients: ["1 cup milk", "1 cup cilantro"],
+      },
+      {
+        name: "aaa monster",
+        id: "wq",
+        description: "yummy",
+        ingredients: ["1 cup milk", "1 cup cilantro"],
+      },
+      {
+        name: "sss monster",
+        id: "ew",
+        description: "yummy",
+        ingredients: ["1 cup milk", "1 cup cilantro"],
+      },
+      {
+        name: "ccc monster",
+        id: "re",
+        description: "yummy",
+        ingredients: ["1 cup milk", "1 cup cilantro"],
+      },
+      {
+        name: "bbb monster",
+        id: "q",
+        description: "yummy",
+        ingredients: ["1 cup milk", "1 cup cilantro"],
+      },
+      {
+        name: "ee monster",
+        id: "s",
+        description: "yummy",
+        ingredients: ["1 cup milk", "1 cup cilantro"],
+      },
+      {
+        name: "ww monster",
+        id: "b",
+        description: "yummy",
+        ingredients: ["1 cup milk", "1 cup cilantro"],
+      },
+    ],
+  };
+
+  addIngredientHandler = (id, val) => {
+    const smoothiesIndex = this.state.smoothies.findIndex(
+      (smoothie) => smoothie.id === id
+    );
+    // console.log(smoothiesIndex);
+    let newArray = [...this.state.smoothies];
+    // console.log(newArray[smoothiesIndex]);
+    newArray[smoothiesIndex] = {
+      ...newArray[smoothiesIndex],
+      ingredientsArr: [...newArray[smoothiesIndex].ingredientsArr, val],
+    };
+    // console.log(newArray[smoothiesIndex]);
+    this.setState({
+      smoothies: newArray,
+    });
+  };
+
+  editDescriptionHandler = (id, val) => {
+    const smoothiesIndex = this.state.smoothies.findIndex(
+      (smoothie) => smoothie.id === id
+    );
+    // console.log(smoothiesIndex);
+    let newArray = [...this.state.smoothies];
+    // console.log(newArray[smoothiesIndex]);
+    newArray[smoothiesIndex] = {
+      ...newArray[smoothiesIndex],
+      description: val,
+    };
+    // console.log(newArray[smoothiesIndex]);
+    this.setState({
+      smoothies: newArray,
+    });
+  };
+
+  removeIngredientHandler = (id, idx) => {
+    const smoothiesIndex = this.state.smoothies.findIndex(
+      (smoothie) => smoothie.id === id
+    );
+    // console.log(smoothiesIndex);
+    let newArray = [...this.state.smoothies];
+    // console.log(newArray[smoothiesIndex]);
+    const copyArr = newArray[smoothiesIndex].ingredientsArr;
+    console.log(copyArr);
+    copyArr.splice(idx, 1);
+    newArray[smoothiesIndex] = {
+      ...newArray[smoothiesIndex],
+      ingredientsArr: copyArr,
+    };
+    // console.log(newArray[smoothiesIndex]);
+    this.setState({
+      smoothies: newArray,
+    });
+  };
 
   deleteSmoothieHandler = (id) => {
     const filtered = this.state.smoothies.filter((obj) => {
@@ -92,6 +147,9 @@ class MyProvider extends Component {
           state: this.state,
           deleteSmoothie: this.deleteSmoothieHandler,
           addSmoothie: this.addSmoothieHandler,
+          addIngredient: this.addIngredientHandler,
+          deleteIngredient: this.removeIngredientHandler,
+          editDescription: this.editDescriptionHandler,
         }}
       >
         {this.props.children}

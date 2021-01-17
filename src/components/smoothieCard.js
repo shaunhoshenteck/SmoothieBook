@@ -4,12 +4,19 @@ import { Card, Button } from "react-bootstrap";
 import smoothieImg from "../smoothie-1.png";
 import smoothieImg2 from "../smoothie-2.jpg";
 import smoothieImg3 from "../smoothie-3.jpg";
+import { useHistory } from "react-router-dom";
 
 const imgArray = [smoothieImg, smoothieImg2, smoothieImg3];
 
 const SmoothieCard = (props) => {
   const context = useContext(MyContext);
   const [imgNum, setImgNum] = useState(props.randomNum);
+  const history = useHistory();
+
+  const routeChange = () => {
+    let path = `/smoothieDetail/?id=${props.id}&name=${props.name}`;
+    history.push(path);
+  };
 
   return (
     <Card
@@ -36,7 +43,12 @@ const SmoothieCard = (props) => {
         <Card.Text className="text-center">{props.description}</Card.Text>
       </Card.Body>
       <div className="d-flex justify-content-between">
-        <Button style={{ width: "70%" }} className="m-3" variant="primary">
+        <Button
+          onClick={() => routeChange()}
+          style={{ width: "70%" }}
+          className="m-3"
+          variant="primary"
+        >
           Update Smoothie
         </Button>
         <div
