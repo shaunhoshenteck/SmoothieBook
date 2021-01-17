@@ -1,70 +1,39 @@
-# Getting Started with Create React App
+## Project Name
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Smoothie Recipe Tracker
 
-## Available Scripts
+An application where a user can create and manage their own smoothie recipes, built with React, JavaScript, and CSS.
 
-In the project directory, you can run:
+## Project Status
 
-### `npm start`
+This project is currently deployed on Heroku. Users can create their own smoothie recipes, sort through them, and update or delete their current recipes. Saved recipes will be stored temporarily on local storage, so users can come back to their recipes. It can be found at: https://smoothie-recipe-tracker.herokuapp.com/
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Installation and Setup Instructions
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Clone down this repository. You will need `node` and `npm` installed globally on your machine.
 
-### `npm test`
+Installation:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+`npm install`
 
-### `npm run build`
+To Run Test Suite:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+`npm test`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To Start Server:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+`npm start`
 
-### `npm run eject`
+To Visit App:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+`localhost:3000`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Reflection
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+This project took around 10 hours to build. Project goals included using technologies I learned up until this point and familiarizing myself with documentation for new features.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+I wanted to build an application that allowed users to create their own smoothie recipes and track/update/delete their recipes. I started this process by using the `create-react-app` boilerplate, then adding `react-router` for routing and used the `context API` to maintain a global state of smoothies. I also used various hooks to manipulate data through prop drilling, state management.
 
-## Learn More
+One of the main challenges I ran into was coming up with the logic to delete and add ingredients, whilst maintaing the global state. I also ran into some problems trying to set the state of nested objects as well as developing some pagination logic. Finally, I also wanted to keep track of each smoothie's unique ids, which would be used during ingredient addition and deletion but to be able to retrieve each id properly, I had to figure out how to retrieve the id from a search query in the url. This lead me to spend a few hours on researching context API, pagination on MaterialUI, various hooks such as useHistory, and local storage. I also used libraries such as `React-Bootstrap`,` MaterialUI`, and `Toastify` to give the project a bit of polish.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+At the end of the day, the technologies implemented in this project are React, React-Router, Formik (Form), Yup(Form validation), React-Bootstrap, MaterialUI, Toastify, and a significant amount of JavaScript and JSX. I chose to use the `create-react-app` boilerplate to minimize initial setup.
